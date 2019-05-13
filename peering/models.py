@@ -833,7 +833,10 @@ class InternetExchange(ChangeLoggedModel, TemplateModel):
 
 class InternetExchangePeeringSession(BGPSession, TemplateModel):
     internet_exchange = models.ForeignKey("InternetExchange", on_delete=models.CASCADE)
+    is_direct_peer = models.BooleanField(blank=True, default=True)
     is_route_server = models.BooleanField(blank=True, default=False)
+    is_route_monitor = models.BooleanField(blank=True, default=False)
+    is_route_server_peer = models.BooleanField(blank=True, default=False)
 
     logger = logging.getLogger("peering.manager.peeringdb")
 

@@ -79,8 +79,29 @@ INTERNET_EXCHANGE_PEERING_SESSION_ACTIONS = """
 <a href="{% url 'peering:internet_exchange_peering_session_edit' pk=record.pk %}" class="btn btn-xs btn-warning"><i class="fas fa-edit"></i></a>
 {% endif %}
 """
+INTERNET_EXCHANGE_PEERING_SESSION_IS_DIRECT_PEER = """
+{% if record.is_direct_peer %}
+<i class="fas fa-check text-success"></i>
+{% else %}
+<i class="fas fa-times text-danger"></i>
+{% endif %}
+"""
 INTERNET_EXCHANGE_PEERING_SESSION_IS_ROUTE_SERVER = """
 {% if record.is_route_server %}
+<i class="fas fa-check text-success"></i>
+{% else %}
+<i class="fas fa-times text-danger"></i>
+{% endif %}
+"""
+INTERNET_EXCHANGE_PEERING_SESSION_IS_ROUTE_MONITOR = """
+{% if record.is_route_monitor %}
+<i class="fas fa-check text-success"></i>
+{% else %}
+<i class="fas fa-times text-danger"></i>
+{% endif %}
+"""
+INTERNET_EXCHANGE_PEERING_SESSION_IS_ROUTE_SERVER_PEER = """
+{% if record.is_route_server_peer %}
 <i class="fas fa-check text-success"></i>
 {% else %}
 <i class="fas fa-times text-danger"></i>
@@ -261,9 +282,24 @@ class InternetExchangePeeringSessionTable(BaseTable):
         verbose_name="IX", accessor="internet_exchange", linkify=True
     )
     ip_address = tables.Column(verbose_name="IP Address", linkify=True)
+    is_direct_peer = tables.TemplateColumn(
+        verbose_name="Route Server",
+        template_code=INTERNET_EXCHANGE_PEERING_SESSION_IS_DIRECT_PEER,
+        attrs={"td": {"class": "text-center"}, "th": {"class": "text-center"}},
+    )
     is_route_server = tables.TemplateColumn(
         verbose_name="Route Server",
         template_code=INTERNET_EXCHANGE_PEERING_SESSION_IS_ROUTE_SERVER,
+        attrs={"td": {"class": "text-center"}, "th": {"class": "text-center"}},
+    )
+    is_route_monitor = tables.TemplateColumn(
+        verbose_name="Route Monitor",
+        template_code=INTERNET_EXCHANGE_PEERING_SESSION_IS_ROUTE_MONITOR,
+        attrs={"td": {"class": "text-center"}, "th": {"class": "text-center"}},
+    )
+    is_route_server_peer = tables.TemplateColumn(
+        verbose_name="Peer of Route Server",
+        template_code=INTERNET_EXCHANGE_PEERING_SESSION_IS_ROUTE_SERVER_PEER,
         attrs={"td": {"class": "text-center"}, "th": {"class": "text-center"}},
     )
     enabled = tables.TemplateColumn(
@@ -281,7 +317,10 @@ class InternetExchangePeeringSessionTable(BaseTable):
             "autonomous_system",
             "internet_exchange",
             "ip_address",
+            "is_direct_peer",
             "is_route_server",
+            "is_route_monitor",
+            "is_route_server_peer",
             "enabled",
             "session_state",
             "actions",

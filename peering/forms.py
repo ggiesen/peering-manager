@@ -512,8 +512,17 @@ class InternetExchangePeeringSessionBulkEditForm(BootstrapMixin, BulkEditForm):
         queryset=InternetExchangePeeringSession.objects.all(),
         widget=forms.MultipleHiddenInput,
     )
+    is_direct_peer = forms.NullBooleanField(
+        required=False, label="Direct Peer", widget=CustomNullBooleanSelect
+    )
     is_route_server = forms.NullBooleanField(
         required=False, label="Route Server", widget=CustomNullBooleanSelect
+    )
+    is_route_monitor = forms.NullBooleanField(
+        required=False, label="Route Monitor", widget=CustomNullBooleanSelect
+    )
+    is_route_server_peer = forms.NullBooleanField(
+        required=False, label="Peer of Route Server", widget=CustomNullBooleanSelect
     )
     enabled = forms.NullBooleanField(
         required=False, label="Enable", widget=CustomNullBooleanSelect
@@ -587,7 +596,10 @@ class InternetExchangePeeringSessionForm(BootstrapMixin, forms.ModelForm):
             "ip_address",
             "password",
             "multihop_ttl",
+            "is_direct_peer",
             "is_route_server",
+            "is_route_monitor",
+            "is_route_server_peer",
             "enabled",
             "import_routing_policies",
             "export_routing_policies",
@@ -597,11 +609,17 @@ class InternetExchangePeeringSessionForm(BootstrapMixin, forms.ModelForm):
             "autonomous_system": "AS",
             "internet_exchange": "IX",
             "ip_address": "IP Address",
+            "is_direct_peer": "Direct Peer",
             "is_route_server": "Route Server",
+            "is_route_monitor": "Route Monitor",
+            "is_route_server_peer": "Peer of Route Server",
         }
         help_texts = {
             "ip_address": "IPv6 or IPv4 address",
+            "is_direct_peer": "Define if this is a direct session to the peer",
             "is_route_server": "Define if this session is with a route server",
+            "is_route_monitor": "Define if this session is with a route monitor",
+            "is_route_server_peer": "Define if this is a virtual session is with peer of a route server",
         }
         widgets = {
             "autonomous_system": APISelect(api_url="/api/peering/autonomous-systems/"),
@@ -618,8 +636,17 @@ class InternetExchangePeeringSessionFilterForm(BootstrapMixin, forms.Form):
     address_family = forms.ChoiceField(
         required=False, choices=IP_FAMILY_CHOICES, widget=StaticSelect
     )
+    is_direct_peer = forms.NullBooleanField(
+        required=False, label="Direct Peer", widget=CustomNullBooleanSelect
+    )
     is_route_server = forms.NullBooleanField(
         required=False, label="Route Server", widget=CustomNullBooleanSelect
+    )
+    is_route_monitor = forms.NullBooleanField(
+        required=False, label="Route Monitor", widget=CustomNullBooleanSelect
+    )
+    is_route_server_peer = forms.NullBooleanField(
+        required=False, label="Peer of Route Server", widget=CustomNullBooleanSelect
     )
     enabled = forms.NullBooleanField(
         required=False, label="Enabled", widget=CustomNullBooleanSelect
@@ -634,8 +661,17 @@ class InternetExchangePeeringSessionFilterFormForIX(BootstrapMixin, forms.Form):
     address_family = forms.ChoiceField(
         required=False, choices=IP_FAMILY_CHOICES, widget=StaticSelect
     )
+    is_direct_peer = forms.NullBooleanField(
+        required=False, label="Direct Peer", widget=CustomNullBooleanSelect
+    )
     is_route_server = forms.NullBooleanField(
         required=False, label="Route Server", widget=CustomNullBooleanSelect
+    )
+    is_route_monitor = forms.NullBooleanField(
+        required=False, label="Route Monitor", widget=CustomNullBooleanSelect
+    )
+    is_route_server_peer = forms.NullBooleanField(
+        required=False, label="Peer of Route Server", widget=CustomNullBooleanSelect
     )
     enabled = forms.NullBooleanField(
         required=False, label="Enabled", widget=CustomNullBooleanSelect
@@ -648,8 +684,17 @@ class InternetExchangePeeringSessionFilterFormForAS(BootstrapMixin, forms.Form):
     address_family = forms.ChoiceField(
         required=False, choices=IP_FAMILY_CHOICES, widget=StaticSelect
     )
+    is_direct_peer = forms.NullBooleanField(
+        required=False, label="Direct Peer", widget=CustomNullBooleanSelect
+    )
     is_route_server = forms.NullBooleanField(
         required=False, label="Route Server", widget=CustomNullBooleanSelect
+    )
+    is_route_monitor = forms.NullBooleanField(
+        required=False, label="Route Monitor", widget=CustomNullBooleanSelect
+    )
+    is_route_server_peer = forms.NullBooleanField(
+        required=False, label="Peer of Route Server", widget=CustomNullBooleanSelect
     )
     enabled = forms.NullBooleanField(
         required=False, label="Enabled", widget=CustomNullBooleanSelect

@@ -34,7 +34,10 @@
             <div class="card-header">
               <strong>Peering Session Details</strong>
               <div class="float-right">
+                {% if peering_session.is_direct_peer %}<span class="badge badge-primary">Direct Session</span>{% endif %}
                 {% if peering_session.is_route_server %}<span class="badge badge-primary">Route Server</span>{% endif %}
+                {% if peering_session.is_route_monitor %}<span class="badge badge-primary">Route Monitor</span>{% endif %}
+                {% if peering_session.is_route_server_peer %}<span class="badge badge-primary">Peer of Route Server</span>{% endif %}
                 {{ peering_session.get_enabled_html }}
                 {% if peering_session.bgp_state and peering_session.internet_exchange.check_bgp_session_states %}{{ peering_session.get_bgp_state_html }}{% endif %}
               </div>
